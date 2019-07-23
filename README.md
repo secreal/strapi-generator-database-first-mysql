@@ -15,6 +15,7 @@ what you need:
 8. many tables will make startup loading slower, and you can't start the server
 9. find config/hook.json and set timeout to 30000 for 30 second, or you can set more
 10. you need to add pool options in your config\environments\development\database.json
+```
       "options": {
         "pool":{
           "min": 0,
@@ -23,6 +24,7 @@ what you need:
           "createTimeoutMillis": 300000,
           "acquireTimeoutMillis": 300000
         }
+```
 11. when everything is done, just start the server
 
 ## Support on Beerpay
