@@ -15,18 +15,18 @@ set newline=^echo:
 
 :: ============================================= database chooser =======================================================
 :dua
-Echo Pilih Server:
+Echo Choose Server:
 SET serverList=1
 if exist serverList.db (
 for /f "delims=" %%x in (serverList.db) do (
 	Echo !serverList!. %%x
 	set /a serverList+=1
 ))
-if %serverList%==1 Echo ^(Server list masih kosong^! silahkan menambahkan baru^)
-Echo [+] tambah server
-Echo [-] hapus server
+if %serverList%==1 Echo ^(Server list still empty^! please add new server^)
+Echo [+] add server
+Echo [-] remove server
 set /a serverList-=1
-set /p pilihan=ketik angka (1-!serverList!):
+set /p pilihan=type number (1-!serverList!):
 set pilihan=%pilihan:~0,2%
 Set _tempvar=0
 if "%pilihan%"=="+" GOTO :tambahServer
@@ -39,14 +39,13 @@ if exist serverList.db (
 for /f "delims=" %%x in (serverList.db) do (
 	if !pilihServer!==!pilihan! SET namaServer=%%x
 	set /a pilihServer+=1
-)) else (Echo Maaf, list database masih kosong!)
+)) else (Echo Sorry, list server still empty!)
 goto :tiga
 
 :tambahServer
 cls
-Echo Silahkan masukkan nama Server disertai port
-Echo port default 3306 contoh: 66.96.232.79 -P3306
-Echo untuk server 66.96.232.79 port yg dibuka adalah 33060 jadi menggunakan -P33060
+Echo Please insert your server name with port
+Echo default port of mysql was 3306 ex: localhost -P3306
 set /P serverBaru=:
 echo !serverBaru! >> serverList.db
 cls
@@ -76,7 +75,7 @@ goto :dua
 :tiga
 
 :userName
-set /P usernameDB=Masukkan Username: 
+set /P usernameDB=Enter Username: 
 IF [!usernameDB!] == [] GOTO :userName
 :passWord
 Set /P "passwordDB=Enter a Password:" < Nul
@@ -91,7 +90,7 @@ goto :empat
 :: choose database
 :empat
 @echo:
-Echo pilih database:
+Echo choose database:
 set /a x = 0
 FOR /F  %%S IN ('mysql -h %namaServer% %userlogin% -s -e "show databases;"') DO (
 if "%%S"=="Msg" Echo Login ke database gagal && goto :dua
@@ -103,7 +102,7 @@ if not "%%S"=="phpmyadmin" (
 set /a x += 1
 Echo !x!. %%S ))))
 )
-set /p pilihan=ketik angka (1-%x%):
+set /p pilihan=type number (1-%x%):
 Set _tempvar=0
 If %pilihan% GTR %x% Set _tempvar=1
 If %pilihan% LSS 1 Set _tempvar=1
@@ -121,8 +120,8 @@ goto :lima
 :: choose table
 :lima
 @echo:
-Echo Silahkan pilih tabel yang akan digenerate, hapus yang tidak perlu
-Echo [tekan enter untuk membuka tableList.log]
+Echo Please select the table to be generated, delete the unnecessary ones
+Echo [press enter to open the tableList.log]
 pause >nul
 mysql -h %namaServer% %userlogin% %namaDatabase% -s -e "show tables;" >tableList.log
 goto :enam
@@ -130,10 +129,10 @@ goto :enam
 :enam
 tableList.log
 @echo:
-Echo [Silahkan ubah dan save tableList.log lalu tekan enter untuk melanjutkan]
+Echo [Please change and save tableList.log then press enter to continue]
 pause >nul
 for /f %%x in (tableList.log) do echo %%x
-set /p pilihan=Apakah list sudah benar (y/n)?
+set /p pilihan=Is the list correct (y/n)?
 IF "%pilihan%" == "y" GOTO :enam
 
 :enam
@@ -284,7 +283,7 @@ echo module.exports ^= {}^;>>!filenameservices!
 )
 
 :end
-echo selesai, terima kasih :D
+echo done, thank you :D - secreal
 pause
 exit
 
