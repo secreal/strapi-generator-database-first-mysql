@@ -24,3 +24,8 @@ what you need:
           "acquireTimeoutMillis": 300000
         }
 11. when everything is done, just start the server
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/secreal/strapi-generator-database-first-mysql/badge.svg?style=beer-square)](https://beerpay.io/secreal/strapi-generator-database-first-mysql)  [![Beerpay](https://beerpay.io/secreal/strapi-generator-database-first-mysql/make-wish.svg?style=flat-square)](https://beerpay.io/secreal/strapi-generator-database-first-mysql?focus=wish)
